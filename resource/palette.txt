@@ -1,0 +1,13 @@
+/* Coolors Exported Palette - https://coolors.co/1f1b24-b80c09-e5e7e6-b7b5b3-72705b */
+
+/* CSV */
+1f1b24,b80c09,e5e7e6,b7b5b3,72705b
+
+/* Array */
+["1f1b24","b80c09","e5e7e6","b7b5b3","72705b"]
+
+/* Object */
+{"Raisin Black":"1f1b24","International Orange Engineering":"b80c09","Platinum":"e5e7e6","Gray X 11 Gray":"b7b5b3","Gold Fusion":"72705b"}
+
+/* Extended Array */
+[{"name":"Raisin Black","hex":"1f1b24","rgb":[31,27,36],"cmyk":[14,25,0,86],"hsb":[267,25,14],"hsl":[267,14,12],"lab":[11,4,-5]},{"name":"International Orange Engineering","hex":"b80c09","rgb":[184,12,9],"cmyk":[0,93,95,28],"hsb":[1,95,72],"hsl":[1,91,38],"lab":[39,61,49]},{"name":"Platinum","hex":"e5e7e6","rgb":[229,231,230],"cmyk":[1,0,0,9],"hsb":[150,1,91],"hsl":[150,4,90],"lab":[91,-1,0]},{"name":"Gray X 11 Gray","hex":"b7b5b3","rgb":[183,181,179],"cmyk":[0,1,2,28],"hsb":[30,2,72],"hsl":[30,3,71],"lab":[74,0,1]},{"name":"Gold Fusion","hex":"72705b","rgb":[114,112,91],"cmyk":[0,2,20,55],"hsb":[55,20,45],"hsl":[55,11,40],"lab":[47,-3,12]}]
