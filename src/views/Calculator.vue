@@ -124,7 +124,7 @@ export default {
       fleetNodes: 0,
       nodeRefreshes: 0,
       maxNodeRefreshes: 0,
-      maxAttempts: 0,
+      nodeAttempts: 0,
       dropRate: 0.33,
       acceleratedCharacter: false,
       daysToFarm: 0,
@@ -143,8 +143,9 @@ export default {
       // reset node refreshes to 0
       this.nodeRefreshes = 0;
     },
-    calculateMaxAttempts: function () {
-      this.maxAttempts =
+    calculateNodeAttempts: function () {
+      // nodeAttempts = characterNodes + fleet`nodes + nodeRefreshes * 5
+      this.nodeAttempts =
         (parseInt(this.characterNodes) +
           parseInt(this.fleetNodes) +
           parseInt(this.nodeRefreshes)) *
@@ -200,19 +201,21 @@ export default {
       }
     },
     calculateDaysToFarm: function () {
-      this.calculateMaxAttempts();
+      this.calculateNodeAttempts();
       this.calculateShardsNeeded();
-      if (this.maxAttempts > 0) {
+      if (this.nodeAttempts > 0) {
         this.daysToFarm =
           parseInt(this.shardsNeeded) /
           parseFloat(this.dropRate) /
-          parseInt(this.maxAttempts);
+          parseInt(this.nodeAttempts);
         if (this.acceleratedCharacter) {
           this.daysToFarm = this.daysToFarm / 2;
         }
         this.daysToFarm = this.daysToFarm.toFixed(1);
-        if (this.daysToFarm < 1) {
+        if (this.daysToFarm < 1 && this.daysToFarm > 0) {
           this.daysToFarm = 1;
+        } else if (this.daysToFarm == 0) {
+          this.daysToFarm = parseInt(this.daysToFarm);
         }
         // reveal results-div
         document.querySelector("#results-div").classList.remove("hidden");
@@ -231,7 +234,7 @@ export default {
         fleetNodes: this.fleetNodes,
         nodeRefreshes: this.nodeRefreshes,
         maxNodeRefreshes: this.maxNodeRefreshes,
-        maxAttempts: this.maxAttempts,
+        nodeAttempts: this.nodeAttempts,
         dropRate: this.dropRate,
         acceleratedCharacter: this.acceleratedCharacter,
         daysToFarm: this.daysToFarm,
