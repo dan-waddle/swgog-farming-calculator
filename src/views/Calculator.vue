@@ -101,7 +101,11 @@
       </div>
 
       <div id="results-div" class="hidden">
-        <div id="results">{{ daysToFarm }} days to seven star!</div>
+        <div id="results">
+          {{ daysToFarm }} days to seven star! <br />
+          {{ weeksToFarm }} weeks to seven star! <br />
+          {{ monthsToFarm }} months to seven star!
+        </div>
       </div>
     </div>
   </div>
@@ -128,6 +132,8 @@ export default {
       dropRate: 0.33,
       acceleratedCharacter: false,
       daysToFarm: 0,
+      weeksToFarm: 0,
+      monthsToFarm: 0,
     };
   },
   methods: {
@@ -140,7 +146,7 @@ export default {
       // max refreshes = total nodes * 7
       this.maxNodeRefreshes =
         (parseInt(this.characterNodes) + parseInt(this.fleetNodes)) * 7;
-      // reset node refreshes to 0
+      // reset node refreshes to 0 to prevent incotrrect value on max change
       this.nodeRefreshes = 0;
     },
     calculateNodeAttempts: function () {
@@ -188,6 +194,7 @@ export default {
       } else if (this.currentStars == 7) {
         this.maxCurrentShards = 0;
       }
+      // reset current shards to prevent incotrrect value on max change
       this.currentShards = 0;
     },
     calculateShardsNeeded: function () {
@@ -203,6 +210,7 @@ export default {
     calculateDaysToFarm: function () {
       this.calculateNodeAttempts();
       this.calculateShardsNeeded();
+      // reqire at least one active node
       if (this.nodeAttempts > 0) {
         this.daysToFarm =
           parseInt(this.shardsNeeded) /
@@ -211,12 +219,29 @@ export default {
         if (this.acceleratedCharacter) {
           this.daysToFarm = this.daysToFarm / 2;
         }
+
+        //clean up results
         this.daysToFarm = this.daysToFarm.toFixed(1);
         if (this.daysToFarm < 1 && this.daysToFarm > 0) {
           this.daysToFarm = 1;
-        } else if (this.daysToFarm == 0) {
+        } else if (this.daysToFarm < 1) {
           this.daysToFarm = parseInt(this.daysToFarm);
         }
+
+        //clean up results
+        this.weeksToFarm = this.daysToFarm / 7;
+        this.weeksToFarm = this.weeksToFarm.toFixed(1);
+        if (this.weeksToFarm < 1) {
+          this.weeksToFarm = 0;
+        }
+
+        //clean up results
+        this.monthsToFarm = this.daysToFarm / 30.437;
+        this.monthsToFarm = this.monthsToFarm.toFixed(1);
+        if (this.monthsToFarm < 1) {
+          this.monthsToFarm = 0;
+        }
+
         // reveal results-div
         document.querySelector("#results-div").classList.remove("hidden");
       }
@@ -228,6 +253,7 @@ export default {
         currentStars: this.currentStars,
         starShards: this.starShards,
         currentShards: this.currentShards,
+        maxCurrentShards: this.maxCurrentShards,
         shardsNeeded: this.shardsNeeded,
         testResults: this.testResults,
         characterNodes: this.characterNodes,
@@ -238,6 +264,8 @@ export default {
         dropRate: this.dropRate,
         acceleratedCharacter: this.acceleratedCharacter,
         daysToFarm: this.daysToFarm,
+        weeksToFarm: this.weeksToFarm,
+        monthsToFarm: this.monthsToFarm,
       });
     },
   },
@@ -322,5 +350,10 @@ slidecontainer {
   height: 15px;
   background: #b80c09;
   cursor: pointer;
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
 }
 </style>
